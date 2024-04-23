@@ -1,0 +1,64 @@
+Port 1024
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+HostKey /hostkeys/ssh_host_rsa_key
+HostKey /hostkeys/ssh_host_ecdsa_key
+HostKey /hostkeys/ssh_host_ed25519_key
+
+PidFile /tmp/sshd.pid
+
+# Ciphers and keying
+#RekeyLimit default none
+
+# Logging
+#SyslogFacility AUTH
+#LogLevel INFO
+
+# Authentication:
+
+#LoginGraceTime 2m
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+IgnoreRhosts yes
+
+# The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
+# but this is overridden so installations will only check .ssh/authorized_keys
+AuthorizedKeysFile      .ssh/authorized_keys
+
+#AuthorizedPrincipalsFile none
+
+#AuthorizedKeysCommand none
+#AuthorizedKeysCommandUser nobody
+
+# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+#HostbasedAuthentication no
+# Change to yes if you don't trust ~/.ssh/known_hosts for
+# HostbasedAuthentication
+#IgnoreUserKnownHosts no
+# Don't read the user's ~/.rhosts and ~/.shosts files
+
+#AllowAgentForwarding yes
+# Feel free to re-enable these if your use case requires them.
+AllowAgentForwarding no
+AllowStreamLocalForwarding no
+AllowTcpForwarding remote
+GatewayPorts yes
+X11Forwarding no
+PermitTTY no
+PermitTunnel no
+PermitUserEnvironment no
+PermitUserRc no
+UseDNS no
+
+
+Match User pgrok
+    AuthorizedKeysFile /hostkeys/authorized_keys
+    ForceCommand /usr/local/bin/pgrok.sh
+
