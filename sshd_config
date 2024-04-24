@@ -3,11 +3,11 @@ AddressFamily any
 ListenAddress 0.0.0.0
 ListenAddress ::
 
-HostKey /hostkeys/ssh_host_rsa_key
-HostKey /hostkeys/ssh_host_ecdsa_key
-HostKey /hostkeys/ssh_host_ed25519_key
+HostKey /pgrok/hostkeys/ssh_host_rsa_key
+HostKey /pgrok/hostkeys/ssh_host_ecdsa_key
+HostKey /pgrok/hostkeys/ssh_host_ed25519_key
 
-PidFile /tmp/sshd.pid
+PidFile /pgrok/sshd.pid
 
 # Ciphers and keying
 #RekeyLimit default none
@@ -23,6 +23,7 @@ PidFile /tmp/sshd.pid
 #MaxAuthTries 6
 #MaxSessions 10
 
+AllowUsers pgrok
 PermitRootLogin no
 PasswordAuthentication no
 PubkeyAuthentication yes
@@ -46,6 +47,7 @@ AuthorizedKeysFile      .ssh/authorized_keys
 
 #AllowAgentForwarding yes
 # Feel free to re-enable these if your use case requires them.
+PermitUserEnvironment "PGROK_USER"
 AllowAgentForwarding no
 AllowStreamLocalForwarding no
 AllowTcpForwarding remote
@@ -59,6 +61,6 @@ UseDNS no
 
 
 Match User pgrok
-    AuthorizedKeysFile /hostkeys/authorized_keys
+    AuthorizedKeysFile /pgrok/authorized_keys
     ForceCommand /usr/local/bin/pgrok.sh
 

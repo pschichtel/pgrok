@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+source "$HOME/.profile"
+
 current_pid="$$"
 parent_pid="$(cat "/proc/${current_pid}/status" | grep PPid | tr -d '\t' | cut -d':' -f2)"
 
@@ -13,12 +15,20 @@ then
     exit 1
 fi
 
-echo "Args: $*"
-echo "Original Command: ${SSH_ORIGINAL_COMMAND:-}"
-echo "Env:"
-env
-
 echo "Forwarded port: $forwarded_port"
+
+command="$SSH_ORIGINAL_COMMAND"
+echo "Original command: $command"
+parsed_command="$(jq -cMR 'def parse($i): if ($i >= (. | length)) then ([]) else (if ($i % 2 == 1) then ([.[$i]] + parse($i + 1)) else (.[$i] | split(" ") | map(select(. != ""))) + parse($i + 1) end) end; split("(?<!\\\\)\""; "") | map(gsub("\\\\\""; "\""; "")) | parse(0) | map(split("=") | {key: .[0], value: (if ((. | length) > 1) then (.[1:] | join("=")) else null end)}) | from_entries' <<< "$command")"
+echo "Args:"
+jq <<< "$parsed_command"
+
+user="$PGROK_USER"
+echo "User: $user"
+domain_suffix="$PGROK_DOMAIN_SUFFIX"
+echo "Domain suffix: $domain_suffix"
+user_domain="$user$domain_suffix"
+echo "User domain: $user_domain"
 
 pre_exit() {
     echo "Bye!" > /proc/1/fd/1
