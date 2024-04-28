@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "pgrok.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  namespace: {{ .Release.Namespace }}
+  name: {{ include "pgrok.serviceAccountName" . }}
+roleRef:
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+  name: {{ include "pgrok.fullname" . }}
