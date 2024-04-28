@@ -7,6 +7,9 @@ shift 1
 
 perform_deploy() {
     config="$1"
+    
+    echo "Current ENV:"
+    env
 
     echo "Deploy Config:"
     jq < "$config"
@@ -23,11 +26,16 @@ perform_deploy() {
 perform_shutdown() {
     config="$1"
 
+    echo "Current ENV:"
+    env
+
     echo "Shutdown Config:"
     jq < "$config"
 }
 
 perform_validate() {
+    echo "Current ENV:"
+    env
     echo "Valid!"
 }
 

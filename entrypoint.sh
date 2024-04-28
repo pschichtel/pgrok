@@ -31,7 +31,14 @@ then
     exit 1
 fi
 
-jq -nr 'env | to_entries | map(select(.key | startswith("PGROK_"))) | map("export " + .key + "=" + (.value | tojson) + "\n") | join("")' \
+base_env_pattern='(?:PGROK_.+|HOSTNAME)'
+if [ -n "${PGROK_ENV_PATTERN:-}" ]
+then
+    env_pattern="^(?:${base_env_pattern}|(?:${PGROK_ENV_PATTERN}))$"
+else
+    env_pattern="^${base_env_pattern}$"
+fi
+jq -nr --arg pattern "$env_pattern" 'env | to_entries | map(select(.key | test($pattern))) | map("export " + .key + "=" + (.value | tojson) + "\n") | join("")' \
     > "$PGROK_CLIENT_HOME/.profile"
 cat "$PGROK_CLIENT_HOME/.profile"
 

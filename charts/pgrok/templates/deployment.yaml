@@ -40,6 +40,11 @@ spec:
             - name: ssh
               containerPort: 1024
               protocol: TCP
+          env:
+          - name: PGROK_INGRESS_DRIVER
+            value: k8s
+          - name: PGROK_ENV_PATTERN
+            value: 'KUBERNETES_.+'
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

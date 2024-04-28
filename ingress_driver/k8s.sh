@@ -10,6 +10,10 @@ perform_deploy() {
 
     echo "Deploy:"
     jq <<< "$config"
+
+    kubectl get services
+    kubectl get ingress
+    kubectl get pod "$HOSTNAME"
 }
 
 perform_shutdown() {
