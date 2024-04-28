@@ -1,6 +1,6 @@
 FROM docker.io/library/alpine:3.19
 
-RUN apk add --update --no-cache openssh bash yq jq kubectl
+RUN apk add --update --no-cache openssh bash yq jq kubectl libidn uuidgen
 
 ENV PGROK_DOMAIN_SUFFIX=".example.org" \
     PGROK_USERS_FILE="/users.yaml" \
@@ -21,4 +21,5 @@ CMD ["/usr/sbin/sshd", "-De"]
 
 COPY entrypoint.sh /entrypoint.sh
 COPY pgrok.sh /usr/local/bin/pgrok.sh
+COPY ingress_driver/ "$PGROK_DIR/ingress_driver/"
 
