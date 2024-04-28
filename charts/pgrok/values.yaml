@@ -6,7 +6,9 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/pschichtel/pgrok
-  pullPolicy: IfNotPresent
+  # TODO switch to this one again once there is releases
+  # pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
