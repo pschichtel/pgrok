@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pgrok
+description: A simple ngrok/sish alternative based on openssh and some bash scripting
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
