@@ -6,17 +6,25 @@ command="${1?no command!}"
 shift 1
 
 perform_deploy() {
-    config="$(cat)"
+    config="$1"
 
-    echo "Deploy:"
-    jq <<< "$config"
+    echo "Deploy Config:"
+    jq < "$config"
+
+    echo "Deploy Input:"
+    if [ $# -gt 1 ]
+    then
+        echo "$2"
+    else
+        echo "none"
+    fi
 }
 
 perform_shutdown() {
-    config="$(cat)"
+    config="$1"
 
-    echo "Deploy:"
-    jq <<< "$config"
+    echo "Shutdown Config:"
+    jq < "$config"
 }
 
 perform_validate() {
