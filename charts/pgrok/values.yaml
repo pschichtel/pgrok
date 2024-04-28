@@ -87,3 +87,26 @@ pgrok:
     ed25519: ""
     rsa: ""
   users: {}
+  ingressClassName: nginx
+  templates:
+    service: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: dummy
+        labels: {}
+      spec:
+        type: ClusterIP
+        ports: []
+        selector:
+          {{- include "pgrok.selectorLabels" . | nindent 4 }}
+    ingress: |
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: dummy
+        labels: {}
+        annotations: {}
+      spec:
+        ingressClassName: {{ .Values.pgrok.ingressClassName }}
+        rules: []

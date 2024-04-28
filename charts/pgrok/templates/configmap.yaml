@@ -4,3 +4,5 @@ metadata:
   name: {{ include "pgrok.fullname" . }}
 data:
   users.yaml: {{ .Values.pgrok.users | toYaml | quote }}
+  service-template.yaml: {{ tpl .Values.pgrok.templates.service $ | quote }}
+  ingress-template.yaml: {{ tpl .Values.pgrok.templates.ingress $ | quote }}

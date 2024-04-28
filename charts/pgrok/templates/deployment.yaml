@@ -55,15 +55,27 @@ spec:
           - name: config
             mountPath: /users.yaml
             subPath: users.yaml
+            readOnly: true
+          - name: config
+            mountPath: /service-template.yaml
+            subPath: service-template.yaml
+            readOnly: true
+          - name: config
+            mountPath: /ingress-template.yaml
+            subPath: ingress-template.yaml
+            readOnly: true
           - name: secrets
             mountPath: /pgrok/hostkeys/ssh_host_ecdsa_key
             subPath: ssh_host_ecdsa_key
+            readOnly: true
           - name: secrets
             mountPath: /pgrok/hostkeys/ssh_host_ed25519_key
             subPath: ssh_host_ed25519_key
+            readOnly: true
           - name: secrets
             mountPath: /pgrok/hostkeys/ssh_host_rsa_key
             subPath: ssh_host_rsa_key
+            readOnly: true
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
