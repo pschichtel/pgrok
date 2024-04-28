@@ -33,7 +33,7 @@ fi
 port="${forwarded_ports[0]}"
 echo "Forwarded port: $port"
 
-command="$SSH_ORIGINAL_COMMAND"
+command="${SSH_ORIGINAL_COMMAND:-""}"
 # shellcheck disable=SC2016
 command_parser='
     def parse($i): if ($i >= (. | length)) then (
@@ -48,7 +48,12 @@ command_parser='
     
     split("(?<!\\\\)\""; "") | map(gsub("\\\\\""; "\""; "")) | parse(0) | map(split("=") | {key: .[0], value: (if ((. | length) > 1) then (.[1:] | join("=")) else null end)}) | from_entries
 '
-parsed_command="$(jq -cMR "$command_parser" <<< "$command")"
+if [ -n "$command" ]
+then
+    parsed_command="$(jq -cMR "$command_parser" <<< "$command")"
+else
+    parsed_command='{}'
+fi
 
 
 user="$PGROK_USER"
