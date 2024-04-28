@@ -6,10 +6,16 @@ metadata:
     {{- include "pgrok.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  {{- with .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- with .Values.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ . }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: ssh
       protocol: TCP
-      name: http
+      name: ssh
   selector:
     {{- include "pgrok.selectorLabels" . | nindent 4 }}

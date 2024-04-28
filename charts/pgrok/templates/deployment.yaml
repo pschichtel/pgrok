@@ -11,8 +11,10 @@ spec:
       {{- include "pgrok.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/common-configmap: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+        checksum/common-secret: {{ include (print $.Template.BasePath "/secret.yaml") $ | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -36,7 +38,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: ssh
-              containerPort: {{ .Values.service.port }}
+              containerPort: 1024
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
@@ -44,12 +46,30 @@ spec:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          - name: config
+            mountPath: /users.yaml
+            subPath: users.yaml
+          - name: secrets
+            mountPath: /pgrok/hostkeys/ssh_host_ecdsa_key
+            subPath: ssh_host_ecdsa_key
+          - name: secrets
+            mountPath: /pgrok/hostkeys/ssh_host_ed25519_key
+            subPath: ssh_host_ed25519_key
+          - name: secrets
+            mountPath: /pgrok/hostkeys/ssh_host_rsa_key
+            subPath: ssh_host_rsa_key
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+      - name: config
+        configMap:
+          name: {{ include "pgrok.fullname" . }}
+      - name: secrets
+        secret:
+          secretName: {{ include "pgrok.fullname" . }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
