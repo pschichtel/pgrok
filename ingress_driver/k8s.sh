@@ -61,7 +61,7 @@ perform_deploy() {
         .spec.ingressClassName = $ingressClass |
         .spec.rules = [
             {
-                host: $config.domain,
+                host: $domain,
                 http: {
                     paths: [
                         {
