@@ -86,6 +86,7 @@ pgrok:
     ecdsa: ""
     ed25519: ""
     rsa: ""
+  domainSuffix: '.example.org'
   users: {}
   ingressClassName: nginx
   templates:
