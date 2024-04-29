@@ -99,8 +99,7 @@ perform_deploy() {
     echo "Service: $(< "$service_file")"
     echo "Ingress: $(< "$ingress_file")"
 
-    kubectl replace -f "$service_file"
-    kubectl replace -f "$ingress_file"
+    kubectl apply --server-side -f "$service_file"  -f "$ingress_file"
 }
 
 perform_shutdown() {
