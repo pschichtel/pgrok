@@ -70,7 +70,9 @@ perform_deploy() {
                             backend: {
                                 service: {
                                     name: $name,
-                                    port: $config.port,
+                                    port: {
+                                        number: $config.port,
+                                    },
                                 },
                             },
                         }
