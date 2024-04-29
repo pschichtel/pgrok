@@ -65,6 +65,11 @@ echo "Domain suffix: $domain_suffix"
 if [ -n "$hostname" ]
 then
     echo "Hostname: $hostname"
+    if grep -q '\.' <<< "$hostname"
+    then
+        echo "Dots (.) are not allowed in the hostname!" >&2
+        exit 1
+    fi
     full_domain="$hostname.$user$domain_suffix"
 else
     full_domain="$user$domain_suffix"
