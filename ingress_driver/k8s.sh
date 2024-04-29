@@ -5,6 +5,10 @@ set -euo pipefail
 command="${1?no command!}"
 shift 1
 
+perform_init() {
+    echo "Valid!"
+}
+
 perform_deploy() {
     config="$(cat)"
 
@@ -23,19 +27,15 @@ perform_shutdown() {
     jq <<< "$config"
 }
 
-perform_validate() {
-    echo "Valid!"
-}
-
 case "$command" in
+    init)
+        perform_init "$@"
+        ;;
     deploy)
         perform_deploy "$@"
         ;;
     shutdown)
         perform_shutdown "$@"
-        ;;
-    validate)
-        perform_validate "$@"
         ;;
     *)
         echo "Unknown command: $command" >&2

@@ -33,21 +33,21 @@ perform_shutdown() {
     jq < "$config"
 }
 
-perform_validate() {
+perform_init() {
     echo "Current ENV:"
     env
     echo "Valid!"
 }
 
 case "$command" in
+    init)
+        perform_init "$@"
+        ;;
     deploy)
         perform_deploy "$@"
         ;;
     shutdown)
         perform_shutdown "$@"
-        ;;
-    validate)
-        perform_validate "$@"
         ;;
     *)
         echo "Unknown command: $command" >&2

@@ -25,7 +25,7 @@ else
     exit 1
 fi
 
-if ! "$PGROK_INGRESS_DRIVER_PATH" validate
+if ! "$PGROK_INGRESS_DRIVER_PATH" init
 then
     echo "Ingress driver validation failed! This is a misconfiguration." >&2
     exit 1
