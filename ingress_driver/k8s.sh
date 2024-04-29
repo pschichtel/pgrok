@@ -11,7 +11,7 @@ perform_init() {
 
 make_resource_name() {
     local config="${1?no config path!}"
-    echo "pgrok-$(jq -r .prefix <<< "$config" | idn)"
+    echo "pgrok-$(jq -r .prefix <<< "$config" | idn | sed -e 's/-/--/g' -e 's/\./-/g')"
 }
 
 perform_deploy() {
