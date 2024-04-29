@@ -88,10 +88,12 @@ jq -n \
     --arg domain "$full_domain" \
     --arg prefix "${full_domain%"$domain_suffix"}" \
     --arg tls_mode "$tls_mode" \
+    --argjson port "$port" \
     --argjson www_mode "$www_mode" \
 '{
     user: $user,
     domain: $domain,
+    port: $port,
     prefix: $prefix,
     tls_mode: $tls_mode,
     redirect_www: $www_mode,
