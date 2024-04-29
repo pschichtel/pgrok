@@ -103,9 +103,10 @@ perform_deploy() {
 }
 
 perform_shutdown() {
-    config="$(cat)"
+    local config
+    config="$(< "${1?no config path!}")"
 
-    echo "Deploy:"
+    echo "Shutdown:"
     jq <<< "$config"
 
     local resource_name
