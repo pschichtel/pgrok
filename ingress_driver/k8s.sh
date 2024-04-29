@@ -83,7 +83,7 @@ perform_deploy() {
         if ($config.tls_mode == "disabled") then (.) else (
             .spec.tls = [
                 {
-                    hosts: ([ $config.domain ] + if ($config.redirect_www) then [("www." + $config.domain)] else ([]) end),
+                    hosts: ([ $domain ] + if ($config.redirect_www) then [("www." + $domain)] else ([]) end),
                     secretName: ($domain + "-tls")
                 }
             ]
