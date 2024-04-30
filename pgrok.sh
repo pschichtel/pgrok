@@ -105,7 +105,7 @@ jq -n \
 }' > "$ingress_config"
 
 on_exit() {
-    "$PGROK_INGRESS_DRIVER_PATH" shutdown "$ingress_config"
+    "$PGROK_INGRESS_DRIVER_PATH" shutdown "$ingress_config" > "/proc/$(< "$PGROK_DIR/sshd.pid")/fd/1"
     exit 0
 }
 on_int_quit_term() {
