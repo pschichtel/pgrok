@@ -15,7 +15,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: |
-        ref="${GITHUB_REF##*/}"
+        tag="${GITHUB_REF##*/}"
         repo_name="ghcr.io/pschichtel/pgrok"
         image_name="$repo_name:$tag"
         podman build -t "$image_name" .
