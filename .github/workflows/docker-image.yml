@@ -16,6 +16,10 @@ jobs:
     - name: Build the Docker image
       run: |
         tag="${GITHUB_REF##*/}"
+        if [ "$tag" = "main" ]
+        then
+          tag='latest'
+        fi
         repo_name="ghcr.io/pschichtel/pgrok"
         image_name="$repo_name:$tag"
         podman build -t "$image_name" .
