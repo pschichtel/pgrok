@@ -11,7 +11,13 @@ echo "Session: $session_id"
 current_pid="$$"
 parent_pid="$(grep PPid "/proc/${current_pid}/status" | tr -d '\t' | cut -d':' -f2)"
 
-readarray -t forwarded_ports <<< "$(bc <<< "ibase=16; $(grep ': 00000000' "/proc/${parent_pid}/net/tcp" | grep -v ': 00000000:0400' | cut -d' ' -f5 | cut -d':' -f2)")"
+extracted_ports="$(bc <<< "ibase=16; $(grep ': 00000000' "/proc/${parent_pid}/net/tcp" | grep -v ': 00000000:0400' | cut -d' ' -f5 | cut -d':' -f2)")"
+if [ -z "$extracted_ports" ]
+then
+    echo "No port forwardings requested!" >&2
+    exit 1
+fi
+readarray -t forwarded_ports <<< "$extracted_ports"
 
 port_count="${#forwarded_ports[@]}"
 echo "Number of requested ports: $port_count"
