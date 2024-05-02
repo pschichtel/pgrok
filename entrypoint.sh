@@ -5,7 +5,7 @@ set -euo pipefail
 auth_key_file="$PGROK_DIR/authorized_keys"
 
 yq eval --output-format=json "$PGROK_USERS_FILE" \
-    | jq -r 'to_entries | map(.key as $u | .value | map("environment=\"PGROK_USER=" + $u + "\" " + . + "\n")) | flatten | join("")' \
+    | jq -r 'to_entries | map(.key as $u | .value as $v | $v.keys | map("environment=\"PGROK_USER=" + $u + "\" environment=\"PGROK_HOSTNAME_PATTERN=" + $v.hostnamePattern + "\" " + . + "\n")) | flatten | join("")' \
     > "$auth_key_file"
 
 cat "$auth_key_file"

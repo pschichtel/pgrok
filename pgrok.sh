@@ -70,6 +70,11 @@ hostname="$(jq -r '.hostname // ""' <<< "$parsed_command")"
 echo "Domain suffix: $domain_suffix"
 if [ -n "$hostname" ]
 then
+    if [ -n "${PGROK_HOSTNAME_PATTERN:-}" ] && grep -qP "$PGROK_HOSTNAME_PATTERN" <<< "$hostname"
+    then
+        echo "Illegal hostname requested: $hostname" >&2
+        exit 1
+    fi
     echo "Hostname: $hostname"
     if grep -q '\.' <<< "$hostname"
     then
