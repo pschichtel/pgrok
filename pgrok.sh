@@ -120,7 +120,7 @@ on_int_quit_term() {
 }
 
 deploy_args=("$ingress_config")
-if ! [ -t 0 ]
+if [ -t 0 ]
 then
     deploy_input="$(head -c 1024)"
     if [ -n "$deploy_input" ]
