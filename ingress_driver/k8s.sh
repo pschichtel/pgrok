@@ -17,6 +17,8 @@ make_resource_name() {
 perform_deploy() {
     local config
     config="$(< "${1?no config path!}")"
+    local args="${2:-}"
+    echo "Args: $args"
 
     local service_template ingress_template
     service_template="$(yq eval --output-format=json /service-template.yaml)"

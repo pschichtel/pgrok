@@ -120,10 +120,13 @@ on_int_quit_term() {
 }
 
 deploy_args=("$ingress_config")
-deploy_input="$(head -c 1024)"
-if [ -n "$deploy_input" ]
+if ! [ -t 0 ]
 then
-    deploy_args+=("$deploy_input")
+    deploy_input="$(head -c 1024)"
+    if [ -n "$deploy_input" ]
+    then
+        deploy_args+=("$deploy_input")
+    fi
 fi
 
 if ! "$PGROK_INGRESS_DRIVER_PATH" deploy "${deploy_args[@]}"
