@@ -23,5 +23,5 @@ jobs:
         repo_name="ghcr.io/pschichtel/pgrok"
         image_name="$repo_name:$tag"
         podman build -t "$image_name" .
-        podman push "$repo_name"
+        podman push "$image_name"
 
