@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine:3.21
+FROM docker.io/library/alpine:3.22
 
 RUN apk add --update --no-cache openssh bash yq jq kubectl libidn uuidgen
 
