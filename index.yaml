@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   pgrok:
   - apiVersion: v2
+    appVersion: 1.1.2
+    created: "2025-10-18T22:15:09.128550389Z"
+    description: A simple ngrok/sish alternative based on openssh and some bash scripting
+    digest: 4475b188930fe61f7db5f799e8fc9342b025fa9f0cdb065333bbcaba1f42f3d0
+    name: pgrok
+    type: application
+    urls:
+    - https://github.com/pschichtel/pgrok/releases/download/pgrok-1.1.4/pgrok-1.1.4.tgz
+    version: 1.1.4
+  - apiVersion: v2
     appVersion: 1.1.1
     created: "2025-10-18T21:43:49.275933456Z"
     description: A simple ngrok/sish alternative based on openssh and some bash scripting
@@ -61,4 +71,4 @@ entries:
     urls:
     - https://github.com/pschichtel/pgrok/releases/download/pgrok-0.1.1/pgrok-0.1.1.tgz
     version: 0.1.1
-generated: "2025-10-18T21:43:49.275961499Z"
+generated: "2025-10-18T22:15:09.128581897Z"
