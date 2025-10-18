@@ -87,7 +87,7 @@ pgrok:
     rsa: ""
   domainSuffix: '.example.org'
   users: {}
-  ingressClassName: nginx
+  ingressClassName: null
   templates:
     service: |
       apiVersion: v1
@@ -108,5 +108,7 @@ pgrok:
         labels: {}
         annotations: {}
       spec:
-        ingressClassName: {{ .Values.pgrok.ingressClassName }}
+        {{- with .Values.pgrok.ingressClassName }}
+        ingressClassName: {{ . }}
+        {{- end }}
         rules: []
