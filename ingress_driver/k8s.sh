@@ -23,7 +23,6 @@ perform_deploy() {
     local service_template ingress_template
     service_template="$(yq eval --output-format=json /service-template.yaml)"
     ingress_template="$(yq eval --output-format=json /ingress-template.yaml)"
-    local ingress_class_name="$(jq -Mc .spec.ingressClassName <<< "$ingress_template)"
 
     local resource_name
     resource_name="$(make_resource_name "$config")"
@@ -55,12 +54,10 @@ perform_deploy() {
         --argjson config "$config" \
         --arg name "$resource_name" \
         --arg domain "$domain" \
-        --argjson ingressClass "$ingress_class_name" \
         '
         .metadata.name = $name |
         if ($config.redirect_www) then (.metadata.labels["nginx.ingress.kubernetes.io/from-to-www-redirect"] = "true") else (.) end |
         if ($config.tls_mode == "redirect" or $config.tls_mode == "only") then (.metadata.labels["nginx.ingress.kubernetes.io/force-ssl-redirect"] = "true") else (.) end |
-        .spec.ingressClassName = $ingressClass |
         .spec.rules = [
             {
                 host: $domain,
