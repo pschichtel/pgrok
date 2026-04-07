@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/pschichtel/pgrok
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "@sha256:a11972079c6d6ae2b68845811335770bb2b953a21858926796f77eefefbc103f"
+  tag: "@sha256:c8fa77cd6d3987d6493ed6b6ab3880b90d45a3f2c043e2382e91d1e15a307d8a"
 
 imagePullSecrets: []
 nameOverride: ""
