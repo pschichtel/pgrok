@@ -1,9 +1,9 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json"
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
     {
       matchPackageNames: ["ghcr.io/pschichtel/pgrok"],
-      pinDigests: false
-    }
-  ]
+      pinDigests: false,
+    },
+  ],
 }
