@@ -1,4 +1,9 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json"
-  ignorePresets: ['docker:pinDigests']
+  packageRules: [
+    {
+      matchPackageNames: ["ghcr.io/pschichtel/pgrok"],
+      pinDigests: false
+    }
+  ]
 }
