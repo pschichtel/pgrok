@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine:3.24.2@sha256:3cf95fe0816180395592b8373f3ec60663f076127617bbacb4eacf9667afe2e9
+FROM docker.io/library/alpine:3.24.3@sha256:b3413572228e34bd1c9245f5565e6cd127005655e8a7899aef33d8e83255c9e6
 
 RUN apk add --update --no-cache openssh bash yq jq kubectl libidn uuidgen
 
